@@ -6,14 +6,12 @@ DB_NAME='ct'
 DB_USER='tester'
 DB_PASSWORD='dummy'
 HOST_PORT=54320
-SCRIPT_PATH="$(cd "$(dirname "$0")" &> /dev/null ; pwd -P)"
 
 runContainer() {
   docker run --rm --name=${CONTAINER_NAME} \
     -e POSTGRES_DB=${DB_NAME} \
     -e POSTGRES_USER=${DB_USER} \
     -e POSTGRES_PASSWORD=${DB_PASSWORD} \
-    -v /"${SCRIPT_PATH}"/db/environments/local://docker-entrypoint-initdb.d \
     -p ${HOST_PORT}:5432 \
     -d postgres:14.7
 }
