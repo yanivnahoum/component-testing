@@ -15,6 +15,7 @@
 ## Examples
 
 1. [SimplePostgresTest](src/test/java/com/att/training/ct/basic/SimplePostgresTest.java)
+1. [JdbcUrlContainerTest](src/test/java/com/att/training/ct/basic/JdbcUrlContainerTest.java)
 2. [ContainerLifecycleTest](src/test/java/com/att/training/ct/basic/ContainerLifecycleTest.java)
 3. [SimpleSpringBootTest](src/test/java/com/att/training/ct/spring/SimpleSpringBootTest.java)
 5. [SpringBootTestContainersTest](src/test/java/com/att/training/ct/spring/SpringBootTestContainersTest.java)
