@@ -12,7 +12,7 @@ import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class TestContainerSingletonTest {
+class TestContainersSingletonTest {
     @SuppressWarnings("resource")
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DEFAULT_IMAGE)
             .withDatabaseName("test")

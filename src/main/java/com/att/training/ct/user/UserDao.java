@@ -15,5 +15,4 @@ public class UserDao {
         var result = jdbcTemplate.queryForObject("SELECT COUNT(1) FROM app.users", Integer.class);
         return requireNonNull(result);
     }
-
 }

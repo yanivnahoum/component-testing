@@ -4,6 +4,9 @@ spring:
     username: tester
     password: dummy
 
+  flyway:
+    enabled: false
+
   output:
     ansi:
       enabled: always
