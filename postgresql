@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+
+set -e
+CONTAINER_NAME='postgresql-component-testing'
+DB_NAME='ct'
+DB_USER='tester'
+DB_PASSWORD='dummy'
+HOST_PORT=54320
+SCRIPT_PATH="$(cd "$(dirname "$0")" &> /dev/null ; pwd -P)"
+
+runContainer() {
+  docker run --rm --name=${CONTAINER_NAME} \
+    -e POSTGRES_DB=${DB_NAME} \
+    -e POSTGRES_USER=${DB_USER} \
+    -e POSTGRES_PASSWORD=${DB_PASSWORD} \
+    -v /"${SCRIPT_PATH}"/db/environments/local://docker-entrypoint-initdb.d \
+    -p ${HOST_PORT}:5432 \
+    -d postgres:14.7
+}
+
+getPostgreSqlLogs() {
+  docker logs $CONTAINER_NAME 2>&1 | grep "PostgreSQL init process complete"
+}
+
+waitForDb() {
+  while LOG=$(getPostgreSqlLogs); [[ $LOG == "" ]]; do
+    echo "Waiting for PostgreSQL to be ready..."
+    sleep 3
+  done
+  echo "PostgreSQL is up and running! Connect @ jdbc:postgresql://localhost:${HOST_PORT}/${DB_NAME} with user=$DB_USER & password=$DB_PASSWORD"
+}
+
+stopContainer() {
+  docker stop ${CONTAINER_NAME}
+}
+
+runFlyway() {
+  # shellcheck disable=SC2145
+  ./mvnw flyway:"$@" \
+    -Dflyway.user=${DB_USER} \
+    -Dflyway.password=${DB_PASSWORD} \
+    -Dflyway.url="jdbc:postgresql://localhost:${HOST_PORT}/${DB_NAME}?useSSL=true"
+}
+
+confirm() {
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) "$@"; break;;
+          No ) exit;;
+      esac
+  done
+}
+
+usage() {
+  echo "PostgreSQL Dockerized Database"
+  echo "usage: ${0} start [-f]|stop|flyway [-r|-c|-b <version>]"
+  echo "options:"
+  echo "start               Starts the PostgreSQL container."
+  echo "start -f            Starts the PostgreSQL container and runs flyway migrate."
+  echo "flyway              Runs flyway migrate on a started container."
+  echo "flyway -r           Runs flyway repair on a started container."
+  echo "flyway -c           Runs flyway clean on a started container. DELETES ALL SCHEMAS!"
+  echo "flyway -b <version> Runs flyway baseline with the specified version on a started container."
+  echo "stop                Stops and removes the container."
+  echo
+  exit 1
+}
+
+case $1 in
+  start )
+  runContainer
+  waitForDb
+  if [[ $# -ge 2 ]]; then
+    case $2 in
+      -f )
+      runFlyway migrate
+      ;;
+
+      * )
+      usage
+      ;;
+    esac
+  fi
+  ;;
+
+  stop )
+  stopContainer
+  ;;
+
+  flyway )
+  if [[ $# -ge 2 ]]; then
+    case $2 in
+      -r )
+      runFlyway repair
+      ;;
+      -c )
+      echo "Do you wish to clean database ${DB_NAME}? All objects will be DROPPED!"
+      confirm runFlyway clean
+      ;;
+      -b )
+      echo "Do you wish to baseline database ${DB_NAME} to version $3?"
+      confirm runFlyway baseline -Dflyway.baselineVersion="$3"
+      ;;
+      * )
+      usage
+      ;;
+    esac
+  else
+    runFlyway migrate
+  fi
+  ;;
+
+  * )
+  usage
+  ;;
+esac

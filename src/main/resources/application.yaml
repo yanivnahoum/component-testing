@@ -1,1 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${db.server:localhost}:${db.port:54320}/ct
+    username: tester
+    password: dummy
 
+  output:
+    ansi:
+      enabled: always
