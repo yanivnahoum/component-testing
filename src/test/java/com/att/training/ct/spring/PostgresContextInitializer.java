@@ -48,7 +48,7 @@ class PostgresContextInitializer implements ApplicationContextInitializer<Config
 
 @SpringBootTest
 @ContextConfiguration(initializers = PostgresContextInitializer.class)
-class SomeOtherDbTest extends PostgresSingleton {
+class SomeOtherDbTest {
     @Autowired
     private UserDao userDao;
 
@@ -63,7 +63,7 @@ class SomeOtherDbTest extends PostgresSingleton {
 @AutoConfigureTestDatabase(replace = NONE)
 @Import(UserDao.class)
 @WithPostgresContainer
-class YetAnotherDbTest extends PostgresSingleton {
+class YetAnotherDbTest {
     @Autowired
     private UserDao userDao;
 

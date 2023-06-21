@@ -11,11 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
 @Slf4j
 abstract class PostgresSingleton {
@@ -59,6 +61,7 @@ class SomeDbTest extends PostgresSingleton {
 @JdbcTest
 @AutoConfigureTestDatabase(replace = NONE)
 @Import(UserDao.class)
+@Transactional(propagation = NOT_SUPPORTED)
 class AnotherDbTest extends PostgresSingleton {
     @Autowired
     private UserDao userDao;

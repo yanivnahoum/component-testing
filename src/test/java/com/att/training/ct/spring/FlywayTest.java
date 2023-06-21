@@ -11,7 +11,10 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(properties = "spring.flyway.enabled=true")
+@SpringBootTest(properties = {
+        "spring.flyway.enabled=true",
+        "spring.flyway.schemas=app"
+})
 class FlywayTest {
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DEFAULT_IMAGE);
     @Autowired
@@ -26,7 +29,6 @@ class FlywayTest {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
-        registry.add("spring.flyway.schemas", () -> "app");
     }
 
     @Test

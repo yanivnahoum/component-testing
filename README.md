@@ -21,6 +21,5 @@ We have a few options for our tests:
 6. [TestContainersSingletonTest](src/test/java/com/att/training/ct/spring/TestContainersSingletonTest.java)
 7. [PostgresSingleton](src/test/java/com/att/training/ct/spring/PostgresSingleton.java)
 8. [PostgresContextInitializer](src/test/java/com/att/training/ct/spring/PostgresContextInitializer.java)
-9. [PostgresContextInitializer](src/test/java/com/att/training/ct/spring/PostgresContextInitializer.java)
-10. [FlywayTest](src/test/java/com/att/training/ct/spring/FlywayTest.java)
-11. [AnotherPostgresTest](src/test/java/com/att/training/ct/advanced/AnotherPostgresTest.java)
+9. [FlywayTest](src/test/java/com/att/training/ct/spring/FlywayTest.java)
+10. [AnotherPostgresTest](src/test/java/com/att/training/ct/advanced/AnotherPostgresTest.java)
