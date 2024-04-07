@@ -1,3 +1,4 @@
+
 package com.att.training.ct.spring;
 
 import com.att.training.ct.user.UserDao;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(properties = {
         "spring.flyway.enabled=true",
-        "spring.flyway.schemas=app"
+        "spring.flyway.defaultSchema=app"
 })
 class FlywayTest {
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DEFAULT_IMAGE);
