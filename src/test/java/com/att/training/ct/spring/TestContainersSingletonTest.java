@@ -20,17 +20,17 @@ class TestContainersSingletonTest {
             .withPassword("pwd")
             .withInitScript("db/init.sql");
 
-
-    @Autowired
-    private UserDao userDao;
-
     static {
         postgres.start();
     }
+
+    @Autowired
+    private UserDao userDao;
 
     @Test
     void startDbBeforeSpringContext() {
         var count = userDao.count();
         assertThat(count).isEqualTo(2);
     }
+
 }

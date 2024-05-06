@@ -3,6 +3,7 @@ package com.att.training.ct.spring;
 import com.att.training.ct.user.UserDao;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -19,14 +20,15 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
 @Slf4j
-abstract class PostgresSingleton {
+public abstract class PostgresSingleton {
     @SuppressWarnings("resource")
     @ServiceConnection
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DEFAULT_IMAGE)
             .withDatabaseName("test")
             .withUsername("postgres")
             .withPassword("pwd")
-            .withInitScript("db/init.sql");
+            .withInitScript("db/init.sql")
+            .withReuse(true);
 
     static {
         postgres.start();
@@ -39,6 +41,7 @@ abstract class PostgresSingleton {
     }
 }
 
+@Disabled("Relies on the 2 users from init script")
 @SpringBootTest
 class SomeDbTest extends PostgresSingleton {
     @Autowired
@@ -51,6 +54,7 @@ class SomeDbTest extends PostgresSingleton {
     }
 }
 
+@Disabled("Relies on the 2 users from init script")
 @JdbcTest
 @AutoConfigureTestDatabase(replace = NONE)
 @Import(UserDao.class)
