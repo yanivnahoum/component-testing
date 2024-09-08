@@ -6,9 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.jdbc.JdbcTestUtils.deleteFromTables;
 
 @SpringBootTest
@@ -30,6 +32,7 @@ class UserServiceDbTest extends PostgresSingleton {
     }
 
     @Test
+    @Sql(statements = "DELETE FROM app.users", executionPhase = AFTER_TEST_METHOD)
     void givenMultipleUniqueUsers_whenFindAll_thenReturnAll() {
         // given
         User john = new User(1, "John", "Doe");

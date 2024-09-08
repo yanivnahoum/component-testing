@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,11 +14,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class SimpleSpringBootTest {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private JdbcClient jdbcClient;
 
     @Test
     void select1FromDb() {
-        Integer result = jdbcTemplate.queryForObject("SELECT 1", Integer.class);
+        Integer result = jdbcClient.sql("SELECT 1")
+                .query(Integer.class)
+                .single();
         assertThat(result).isOne();
     }
 }
@@ -27,13 +29,15 @@ class SimpleSpringBootTest {
 @SpringBootTest
 class LocalContainerTest {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private JdbcClient jdbcClient;
 
     @Test
     void startDbInTest() {
         try (var postgres = new PostgreSQLContainer<>(PostgresTestImages.DEFAULT_IMAGE)) {
             postgres.start();
-            Integer result = jdbcTemplate.queryForObject("SELECT 1", Integer.class);
+            Integer result = jdbcClient.sql("SELECT 1")
+                    .query(Integer.class)
+                    .single();
             assertThat(result).isOne();
         }
     }

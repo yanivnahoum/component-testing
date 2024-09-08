@@ -12,6 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.lang.NonNull;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.lang.annotation.Retention;
@@ -22,6 +23,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
 class PostgresContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
     @SuppressWarnings("resource")
@@ -63,6 +65,7 @@ class SomeOtherDbTest {
 @AutoConfigureTestDatabase(replace = NONE)
 @Import(UserDao.class)
 @WithPostgresContainer
+@Transactional(propagation = NOT_SUPPORTED)
 class YetAnotherDbTest {
     @Autowired
     private UserDao userDao;

@@ -17,8 +17,8 @@ class AnotherPostgresTest {
             .withPassword("some_password")
             .withLabel("com.att.training", "component-testing")
             .withLogConsumer(new Slf4jLogConsumer(log))
-            .withCopyFileToContainer(MountableFile.forClasspathResource("db/init.sql"),
-                    "/docker-entrypoint-initdb.d/init.sql")
+            .withCopyFileToContainer(MountableFile.forClasspathResource("db"),
+                    "/docker-entrypoint-initdb.d")
             .withReuse(false);
 
     static {

@@ -4,7 +4,7 @@ import com.att.training.ct.PostgresTestImages;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -15,8 +15,10 @@ class SimplePostgresTest {
     void whenPostgresStart_thenDbIsReachable_andThenItShutsDown() {
         try (var postgres = new PostgreSQLContainer<>(PostgresTestImages.DEFAULT_IMAGE);
              var datasource = buildDataSource(postgres)) {
-            var jdbcTemplate = new JdbcTemplate(datasource);
-            Integer result = jdbcTemplate.queryForObject("SELECT 1", Integer.class);
+            var jdbcClient = JdbcClient.create(datasource);
+            Integer result = jdbcClient.sql("SELECT 1")
+                    .query(Integer.class)
+                    .single();
             assertThat(result).isOne();
         }
     }

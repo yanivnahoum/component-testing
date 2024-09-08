@@ -3,7 +3,7 @@ package com.att.training.ct.basic;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,8 +11,10 @@ class JdbcUrlContainerTest {
     @Test
     void whenPostgresStart_thenDbIsReachable_andThenItShutsDown() {
         try (var datasource = buildDataSource()) {
-            var jdbcTemplate = new JdbcTemplate(datasource);
-            Integer result = jdbcTemplate.queryForObject("SELECT 1", Integer.class);
+            var jdbcClient = JdbcClient.create(datasource);
+            Integer result = jdbcClient.sql("SELECT 1")
+                    .query(Integer.class)
+                    .single();
             assertThat(result).isOne();
         }
     }
