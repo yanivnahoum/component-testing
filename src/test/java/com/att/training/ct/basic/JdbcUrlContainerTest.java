@@ -21,7 +21,7 @@ class JdbcUrlContainerTest {
 
     protected HikariDataSource buildDataSource() {
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:tc:postgresql:14.9:///test?TC_INITSCRIPT=db/init.sql");
+        hikariConfig.setJdbcUrl("jdbc:tc:postgresql:14.12:///test?TC_INITSCRIPT=db/init.sql");
         hikariConfig.setUsername("test");
         hikariConfig.setPassword("test");
         return new HikariDataSource(hikariConfig);
