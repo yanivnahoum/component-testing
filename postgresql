@@ -34,7 +34,7 @@ stopContainer() {
 
 runFlyway() {
   # shellcheck disable=SC2145
-  ./mvnw flyway:"$@" \
+  ./mvnw -Pflyway flyway:"$@" \
     -Dflyway.user=${DB_USER} \
     -Dflyway.password=${DB_PASSWORD} \
     -Dflyway.url="jdbc:postgresql://localhost:${HOST_PORT}/${DB_NAME}?useSSL=true"

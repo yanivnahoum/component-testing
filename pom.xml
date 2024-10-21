@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.3</version>
+        <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -80,6 +80,29 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>flyway</id>
+            <dependencies>
+                <!--
+                Flyway postgres dependency is required for migrating via the plugin.
+                Since we want to migrate the db only for tests but not every time the app starts, we have 2 options:
+                1. Set the flyway-database-postgresql scope to test so it won't be detected by Spring Boot when the app
+                   starts, but it will be detected when running tests. Define this profile and activate it when migrating
+                   via the plugin (see ./postgresql)
+                2. Set the flyway-database-postgresql scope to runtime. So no need for a profile for the plugin, but we
+                   have to set the flyway.enabled property to false in the application.yml, and set it to true in the
+                   base class for all database tests.
+                -->
+                <dependency>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-database-postgresql</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
