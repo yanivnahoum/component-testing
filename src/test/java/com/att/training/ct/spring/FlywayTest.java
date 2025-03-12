@@ -11,10 +11,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(properties = {
-        "spring.flyway.enabled=true",
-        "spring.flyway.defaultSchema=app"
-})
+@SpringBootTest(properties = "spring.flyway.enabled=true")
 class FlywayTest {
     @ServiceConnection
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DEFAULT_IMAGE);

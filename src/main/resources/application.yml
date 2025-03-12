@@ -6,6 +6,7 @@ spring:
 
   flyway:
     enabled: false
+    default-schema: app
 
   output:
     ansi:
