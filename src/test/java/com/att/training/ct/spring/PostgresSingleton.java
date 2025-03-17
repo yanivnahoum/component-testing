@@ -4,7 +4,6 @@ import com.att.training.ct.user.UserDao;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
@@ -14,18 +13,14 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
 public abstract class PostgresSingleton {
     @SuppressWarnings("resource")
     @ServiceConnection
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DEFAULT_IMAGE)
-            .withDatabaseName("test")
-            .withUsername("postgres")
-            .withPassword("pwd")
             .withInitScript("db/init.sql")
-            .withReuse(true);
+            .withReuse(false);
 
     static {
         postgres.start();
@@ -47,7 +42,6 @@ class SomeDbTest extends PostgresSingleton {
 
 @Disabled("Depends on the 2 users from init script")
 @JdbcTest
-@AutoConfigureTestDatabase(replace = NONE)
 @Import(UserDao.class)
 @Transactional(propagation = NOT_SUPPORTED)
 class AnotherDbTest extends PostgresSingleton {

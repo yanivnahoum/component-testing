@@ -32,5 +32,4 @@ class TestContainersSingletonTest {
         var count = userDao.count();
         assertThat(count).isEqualTo(2);
     }
-
 }

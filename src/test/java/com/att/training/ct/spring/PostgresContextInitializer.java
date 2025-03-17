@@ -28,9 +28,6 @@ import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORT
 class PostgresContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
     @SuppressWarnings("resource")
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DEFAULT_IMAGE)
-            .withDatabaseName("test")
-            .withUsername("postgres")
-            .withPassword("pwd")
             .withInitScript("db/init.sql");
 
     static {
@@ -49,7 +46,7 @@ class PostgresContextInitializer implements ApplicationContextInitializer<Config
 }
 
 @SpringBootTest
-@ContextConfiguration(initializers = PostgresContextInitializer.class)
+@WithPostgresContainer
 class SomeOtherDbTest {
     @Autowired
     private UserDao userDao;

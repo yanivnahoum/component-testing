@@ -50,5 +50,4 @@ class UserServiceDbTest extends PostgresSingleton {
         // then
         assertThat(users).containsExactlyInAnyOrder(john, mary, alice);
     }
-
 }
