@@ -18,7 +18,7 @@ class SimpleSpringBootTest {
 
     @Test
     void select1FromDb() {
-        Integer result = jdbcClient.sql("SELECT 1")
+        int result = jdbcClient.sql("SELECT 1")
                 .query(Integer.class)
                 .single();
         assertThat(result).isOne();
@@ -35,7 +35,7 @@ class LocalContainerTest {
     void startDbInTest() {
         try (var postgres = new PostgreSQLContainer<>(PostgresTestImages.DEFAULT_IMAGE)) {
             postgres.start();
-            Integer result = jdbcClient.sql("SELECT 1")
+            int result = jdbcClient.sql("SELECT 1")
                     .query(Integer.class)
                     .single();
             assertThat(result).isOne();

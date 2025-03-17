@@ -16,7 +16,7 @@ class SimplePostgresTest {
         try (var postgres = new PostgreSQLContainer<>(PostgresTestImages.DEFAULT_IMAGE);
              var datasource = buildDataSource(postgres)) {
             var jdbcClient = JdbcClient.create(datasource);
-            Integer result = jdbcClient.sql("SELECT 1")
+            int result = jdbcClient.sql("SELECT 1")
                     .query(Integer.class)
                     .single();
             assertThat(result).isOne();

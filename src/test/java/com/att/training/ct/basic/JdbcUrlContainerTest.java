@@ -12,7 +12,7 @@ class JdbcUrlContainerTest {
     void whenPostgresStart_thenDbIsReachable_andThenItShutsDown() {
         try (var datasource = buildDataSource()) {
             var jdbcClient = JdbcClient.create(datasource);
-            Integer result = jdbcClient.sql("SELECT 1")
+            int result = jdbcClient.sql("SELECT 1")
                     .query(Integer.class)
                     .single();
             assertThat(result).isOne();
@@ -21,7 +21,7 @@ class JdbcUrlContainerTest {
 
     protected HikariDataSource buildDataSource() {
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:tc:postgresql:14.12:///test?TC_INITSCRIPT=db/init.sql");
+        hikariConfig.setJdbcUrl("jdbc:tc:postgresql:16.4:///test?TC_INITSCRIPT=db/init.sql");
         hikariConfig.setUsername("test");
         hikariConfig.setPassword("test");
         return new HikariDataSource(hikariConfig);
