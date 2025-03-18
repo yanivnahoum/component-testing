@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingLong;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class UserService {
 
     private List<User> multipleUsersFound(List<User> users) {
         return users.stream()
-                .sorted(comparing(User::id).reversed())
+                .sorted(comparingLong(User::id).reversed())
                 .filter(byDistinctName())
                 .toList();
     }
