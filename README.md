@@ -23,3 +23,4 @@ We have a few options for our tests:
 8. [PostgresContextInitializer](src/test/java/com/att/training/ct/spring/PostgresContextInitializer.java)
 9. [FlywayTest](src/test/java/com/att/training/ct/spring/FlywayTest.java)
 10. [AnotherPostgresTest](src/test/java/com/att/training/ct/advanced/AnotherPostgresTest.java)
+11. [Adding Containers to the Spring Context](src/test/java/com/att/training/ct/spring/beans/DbTest.java)
