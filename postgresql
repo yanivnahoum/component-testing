@@ -13,7 +13,7 @@ runContainer() {
     -e POSTGRES_USER=${DB_USER} \
     -e POSTGRES_PASSWORD=${DB_PASSWORD} \
     -p ${HOST_PORT}:5432 \
-    -d postgres:14.12
+    -d postgres:16.4
 }
 
 getPostgreSqlLogs() {
