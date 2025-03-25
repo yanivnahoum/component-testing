@@ -55,7 +55,8 @@ class UserRestClientComponentTest {
                 .setBody("""
                         {
                             "id": 2,
-                            "name": "Jane"
+                            "firstName": "Mary",
+                            "lastName": "Smith"
                         }
                         """)
         );
