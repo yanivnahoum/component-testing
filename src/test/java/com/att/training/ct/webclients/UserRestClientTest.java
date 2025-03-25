@@ -62,8 +62,8 @@ class UserRestClientTest {
     @Test
     void givenUserJohnDoe_whenPatchUser_thenMakeTheRightHttpRequest() throws InterruptedException, JsonProcessingException {
         mockWebServer.enqueue(new MockResponse().setResponseCode(NO_CONTENT.value()));
-
         var patchedUser = new User(1, "John", "Smith");
+
         userClient.update(patchedUser);
 
         var recordedRequest = mockWebServer.takeRequest();

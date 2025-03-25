@@ -72,8 +72,8 @@ class AnotherUserRestClientTest {
     @Test
     void givenUserJohnDoe_whenPatchUser_thenVerifyTheRightHttpRequestWasMade() throws JsonProcessingException {
         stubFor(patch("/users").willReturn(noContent()));
-
         var patchedUser = new User(1, "John", "Smith");
+
         userClient.update(patchedUser);
 
         verify(patchRequestedFor(urlEqualTo("/users"))
