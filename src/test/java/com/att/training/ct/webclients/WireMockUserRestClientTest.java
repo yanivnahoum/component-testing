@@ -38,7 +38,6 @@ class WireMockUserRestClientTest {
             .options(wireMockConfig().dynamicPort().notifier(new Slf4jNotifier(true)))
             .build();
     private UserClient userClient;
-    private UserClient anotherUserClient;
 
     @BeforeEach
     void setUp(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -46,11 +45,6 @@ class WireMockUserRestClientTest {
                 wmRuntimeInfo.getHttpBaseUrl()
         );
         userClient = new UserClient(RestClient.builder(), userClientProperties);
-
-        UserClientProperties differentUserClientProperties = new UserClientProperties(
-                wireMock.getRuntimeInfo().getHttpBaseUrl()
-        );
-        anotherUserClient = new UserClient(RestClient.builder(), differentUserClientProperties);
     }
 
     @Test
@@ -67,24 +61,6 @@ class WireMockUserRestClientTest {
         ));
 
         var user = userClient.get(1);
-
-        assertThat(user).isEqualTo(new User(1, "John", "Doe"));
-    }
-
-    @Test
-    void givenUserJohn_whenGetUser_thenReturnJohn2() {
-        wireMock.stubFor(get("/users/1").willReturn(
-                ok().withHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                        .withBody("""
-                                {
-                                    "id": 1,
-                                    "firstName": "John",
-                                    "lastName": "Doe"
-                                }
-                                """)
-        ));
-
-        var user = anotherUserClient.get(2);
 
         assertThat(user).isEqualTo(new User(1, "John", "Doe"));
     }
