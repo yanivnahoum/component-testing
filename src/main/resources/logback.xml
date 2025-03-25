@@ -10,6 +10,7 @@
 
     <logger name="com.att.training.ct.advanced.AnotherPostgresTest" level="warn"/>
     <logger name="tc" level="info"/>
+    <logger name="WireMock" level="trace"/>
 
     <root level="info">
         <appender-ref ref="stdout"/>

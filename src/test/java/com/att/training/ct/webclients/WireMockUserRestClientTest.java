@@ -5,10 +5,13 @@ import com.att.training.ct.user.UserClient;
 import com.att.training.ct.user.UserClientProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.web.client.RestClient;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
@@ -21,15 +24,21 @@ import static com.github.tomakehurst.wiremock.client.WireMock.patchRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @WireMockTest
-class AnotherUserRestClientTest {
+class WireMockUserRestClientTest {
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    @RegisterExtension
+    static WireMockExtension wireMock = WireMockExtension.newInstance()
+            .options(wireMockConfig().dynamicPort().notifier(new Slf4jNotifier(true)))
+            .build();
     private UserClient userClient;
+    private UserClient anotherUserClient;
 
     @BeforeEach
     void setUp(WireMockRuntimeInfo wmRuntimeInfo) {
@@ -37,6 +46,11 @@ class AnotherUserRestClientTest {
                 wmRuntimeInfo.getHttpBaseUrl()
         );
         userClient = new UserClient(RestClient.builder(), userClientProperties);
+
+        UserClientProperties differentUserClientProperties = new UserClientProperties(
+                wireMock.getRuntimeInfo().getHttpBaseUrl()
+        );
+        anotherUserClient = new UserClient(RestClient.builder(), differentUserClientProperties);
     }
 
     @Test
@@ -53,6 +67,24 @@ class AnotherUserRestClientTest {
         ));
 
         var user = userClient.get(1);
+
+        assertThat(user).isEqualTo(new User(1, "John", "Doe"));
+    }
+
+    @Test
+    void givenUserJohn_whenGetUser_thenReturnJohn2() {
+        wireMock.stubFor(get("/users/1").willReturn(
+                ok().withHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                        .withBody("""
+                                {
+                                    "id": 1,
+                                    "firstName": "John",
+                                    "lastName": "Doe"
+                                }
+                                """)
+        ));
+
+        var user = anotherUserClient.get(2);
 
         assertThat(user).isEqualTo(new User(1, "John", "Doe"));
     }
@@ -79,5 +111,23 @@ class AnotherUserRestClientTest {
         verify(patchRequestedFor(urlEqualTo("/users"))
                 .withHeader(CONTENT_TYPE, equalTo(APPLICATION_JSON_VALUE))
                 .withRequestBody(equalToJson(objectMapper.writeValueAsString(patchedUser))));
+    }
+
+    @Test
+    void givenUserJohnDoe_whenPatchUser_thenMakeTheRightHttpRequest2() throws JsonProcessingException {
+        var patchedUser = new User(1, "John", "Smith");
+        var patchedUserAsJson = objectMapper.writeValueAsString(patchedUser);
+        stubFor(patch("/users")
+                .withHeader(CONTENT_TYPE, equalTo(APPLICATION_JSON_VALUE))
+                .withRequestBody(equalToJson(patchedUserAsJson))
+                .willReturn(noContent()));
+        stubFor(get("/users/1").willReturn(
+                ok().withHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                        .withBody(patchedUserAsJson)
+        ));
+
+        var user = userClient.updateAndGet(patchedUser);
+
+        assertThat(user).isEqualTo(patchedUser);
     }
 }

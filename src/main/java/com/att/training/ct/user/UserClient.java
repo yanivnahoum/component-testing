@@ -40,4 +40,9 @@ public class UserClient {
                 .retrieve()
                 .toBodilessEntity();
     }
+
+    public User updateAndGet(User user) {
+        update(user);
+        return get(user.id());
+    }
 }
