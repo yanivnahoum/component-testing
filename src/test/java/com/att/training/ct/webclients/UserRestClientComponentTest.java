@@ -18,6 +18,9 @@ import org.springframework.test.util.TestSocketUtils;
 
 import java.io.IOException;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.ok;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -63,19 +66,18 @@ class UserRestClientComponentTest {
         // We then run some code that throws an exception or fails to dequeue the response
     }
 
-    @Order(2)
     @Test
     void givenUserJohn_whenGetUser_thenReturnJohn() {
-        mockWebServer.enqueue(new MockResponse()
-                .setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                .setBody("""
-                        {
-                            "id": 1,
-                            "firstName": "John",
-                            "lastName": "Doe"
-                        }
-                        """)
-        );
+        stubFor(get("/users/1").willReturn(
+                ok().withHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                        .withBody("""
+                                {
+                                    "id": 1,
+                                    "firstName": "John",
+                                    "lastName": "Doe"
+                                }
+                                """)
+        ));
 
         var user = userClient.get(1);
 
