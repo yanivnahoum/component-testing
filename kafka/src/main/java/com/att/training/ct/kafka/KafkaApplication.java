@@ -6,8 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
-public class SpringKafkaApplication {
+public class KafkaApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpringKafkaApplication.class, args);
+        SpringApplication.run(KafkaApplication.class, args);
     }
 }
