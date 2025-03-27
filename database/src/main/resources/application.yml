@@ -8,16 +8,6 @@ spring:
     enabled: false
     default-schema: app
 
-  http:
-    client:
-      factory: http-components
-      connect-timeout: 3s
-      read-timeout: 10s
-
   output:
     ansi:
       enabled: always
-
-app:
-  user:
-    base-url: http://localhost:8088

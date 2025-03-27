@@ -9,4 +9,3 @@ public class TestSpringKafkaApplication {
                 .run(args);
     }
 }
-

@@ -1,7 +1,5 @@
-package com.att.training.ct.webclient;
+package com.att.training.ct.httpclient;
 
-import com.att.training.ct.user.User;
-import com.att.training.ct.user.UserClient;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;

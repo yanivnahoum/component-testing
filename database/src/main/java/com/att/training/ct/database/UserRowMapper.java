@@ -1,4 +1,4 @@
-package com.att.training.ct.user;
+package com.att.training.ct.database;
 
 import org.springframework.jdbc.core.RowMapper;
 

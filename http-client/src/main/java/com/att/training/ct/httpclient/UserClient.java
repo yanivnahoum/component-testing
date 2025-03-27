@@ -1,4 +1,4 @@
-package com.att.training.ct.user;
+package com.att.training.ct.httpclient;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
@@ -46,3 +46,4 @@ public class UserClient {
         return get(user.id());
     }
 }
+

@@ -1,7 +1,5 @@
-package com.att.training.ct.webclient;
+package com.att.training.ct.httpclient;
 
-import com.att.training.ct.user.User;
-import com.att.training.ct.user.UserClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

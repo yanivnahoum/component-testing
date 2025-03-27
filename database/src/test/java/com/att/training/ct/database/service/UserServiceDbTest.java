@@ -1,9 +1,9 @@
-package com.att.training.ct.database.user;
+package com.att.training.ct.database.service;
 
+import com.att.training.ct.database.NoUsersFoundException;
+import com.att.training.ct.database.User;
+import com.att.training.ct.database.UserService;
 import com.att.training.ct.database.spring.PostgresSingleton;
-import com.att.training.ct.user.NoUsersFoundException;
-import com.att.training.ct.user.User;
-import com.att.training.ct.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

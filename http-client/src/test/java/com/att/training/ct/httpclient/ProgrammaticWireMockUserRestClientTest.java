@@ -1,8 +1,5 @@
-package com.att.training.ct.webclient;
+package com.att.training.ct.httpclient;
 
-import com.att.training.ct.user.User;
-import com.att.training.ct.user.UserClient;
-import com.att.training.ct.user.UserClientProperties;
 import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;

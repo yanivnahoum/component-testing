@@ -1,4 +1,4 @@
-package com.att.training.ct.user;
+package com.att.training.ct.database;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;

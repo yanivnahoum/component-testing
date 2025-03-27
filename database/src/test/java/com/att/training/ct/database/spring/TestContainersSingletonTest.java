@@ -1,6 +1,6 @@
 package com.att.training.ct.database.spring;
 
-import com.att.training.ct.user.UserDao;
+import com.att.training.ct.database.UserDao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.att.training.ct.user;
+package com.att.training.ct.httpclient;
 
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
