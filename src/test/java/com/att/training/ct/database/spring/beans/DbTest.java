@@ -1,4 +1,4 @@
-package com.att.training.ct.spring.beans;
+package com.att.training.ct.database.spring.beans;
 
 import com.att.training.ct.user.UserDao;
 import org.junit.jupiter.api.Test;

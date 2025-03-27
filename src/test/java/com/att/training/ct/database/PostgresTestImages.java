@@ -1,4 +1,4 @@
-package com.att.training.ct;
+package com.att.training.ct.database;
 
 import org.testcontainers.utility.DockerImageName;
 

@@ -1,4 +1,4 @@
-package com.att.training.ct.spring;
+package com.att.training.ct.database.spring;
 
 import com.att.training.ct.user.UserDao;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
+import static com.att.training.ct.database.PostgresTestImages.DEFAULT_IMAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(properties = "spring.sql.init.mode=always")

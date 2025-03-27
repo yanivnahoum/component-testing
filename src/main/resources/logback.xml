@@ -8,7 +8,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.att.training.ct.advanced.AnotherPostgresTest" level="warn"/>
+    <logger name="com.att.training.ct.database.advanced.AnotherPostgresTest" level="warn"/>
     <logger name="tc" level="info"/>
     <logger name="WireMock" level="trace"/>
 

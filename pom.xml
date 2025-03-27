@@ -23,7 +23,7 @@
         <flyway.defaultSchema>app</flyway.defaultSchema>
         <mockwebserver.version>4.12.0</mockwebserver.version>
         <wiremock.version>3.12.1</wiremock.version>
-        <wiremock-spring-boot.version>3.6.0</wiremock-spring-boot.version>
+        <wiremock-spring-boot.version>3.9.0</wiremock-spring-boot.version>
     </properties>
 
     <dependencies>

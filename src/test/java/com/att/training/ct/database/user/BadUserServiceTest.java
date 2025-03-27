@@ -1,5 +1,9 @@
-package com.att.training.ct.user;
+package com.att.training.ct.database.user;
 
+import com.att.training.ct.user.NoUsersFoundException;
+import com.att.training.ct.user.User;
+import com.att.training.ct.user.UserDao;
+import com.att.training.ct.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,27 +1,38 @@
-package com.att.training.ct.webclients;
+package com.att.training.ct.webclient;
 
 import com.att.training.ct.user.User;
 import com.att.training.ct.user.UserClient;
+import com.att.training.ct.user.UserClientProperties;
+import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.wiremock.spring.ConfigureWireMock;
-import org.wiremock.spring.EnableWireMock;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.springframework.web.client.RestClient;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.ok;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@SpringBootTest
-@EnableWireMock(@ConfigureWireMock(
-        baseUrlProperties = "app.user.base-url"
-))
-class WireMockUserRestClientComponentTest {
-    @Autowired
+class ProgrammaticWireMockUserRestClientTest {
+    @RegisterExtension
+    static WireMockExtension wireMock = WireMockExtension.newInstance()
+            .options(wireMockConfig().dynamicPort().notifier(new Slf4jNotifier(true)))
+            .configureStaticDsl(true)
+            .build();
     private UserClient userClient;
+
+    @BeforeEach
+    void setUp() {
+        UserClientProperties userClientProperties = new UserClientProperties(
+                wireMock.getRuntimeInfo().getHttpBaseUrl()
+        );
+        userClient = new UserClient(RestClient.builder(), userClientProperties);
+    }
 
     @Test
     void givenUserJohn_whenGetUser_thenReturnJohn() {

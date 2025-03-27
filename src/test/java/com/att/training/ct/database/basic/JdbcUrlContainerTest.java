@@ -1,4 +1,4 @@
-package com.att.training.ct.basic;
+package com.att.training.ct.database.basic;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

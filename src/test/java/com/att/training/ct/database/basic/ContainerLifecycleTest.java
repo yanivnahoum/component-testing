@@ -1,4 +1,4 @@
-package com.att.training.ct.basic;
+package com.att.training.ct.database.basic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
+import static com.att.training.ct.database.PostgresTestImages.DEFAULT_IMAGE;
 
 /**
  * The {@code @TestContainers} meta-annotation is basically a junit jupiter extension that looks for

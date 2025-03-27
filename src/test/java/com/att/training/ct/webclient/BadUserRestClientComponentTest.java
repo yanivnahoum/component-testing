@@ -1,4 +1,4 @@
-package com.att.training.ct.webclients;
+package com.att.training.ct.webclient;
 
 import com.att.training.ct.user.User;
 import com.att.training.ct.user.UserClient;

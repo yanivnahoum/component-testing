@@ -1,4 +1,4 @@
-package com.att.training.ct.spring;
+package com.att.training.ct.database.spring;
 
 import com.att.training.ct.user.UserDao;
 import org.junit.jupiter.api.Disabled;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
+import static com.att.training.ct.database.PostgresTestImages.DEFAULT_IMAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 

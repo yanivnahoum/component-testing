@@ -1,6 +1,6 @@
-package com.att.training.ct.basic;
+package com.att.training.ct.database.basic;
 
-import com.att.training.ct.PostgresTestImages;
+import com.att.training.ct.database.PostgresTestImages;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.Test;

@@ -5,5 +5,5 @@
  * 1. UserDao.count(): already implemented
  * 2. UserDao.getName(int id): Get the name of user with id=1
  */
-package com.att.training.ct.exercises;
+package com.att.training.ct.database.exercises;
 

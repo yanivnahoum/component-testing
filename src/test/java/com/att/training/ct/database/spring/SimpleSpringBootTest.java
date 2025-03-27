@@ -1,6 +1,6 @@
-package com.att.training.ct.spring;
+package com.att.training.ct.database.spring;
 
-import com.att.training.ct.PostgresTestImages;
+import com.att.training.ct.database.PostgresTestImages;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

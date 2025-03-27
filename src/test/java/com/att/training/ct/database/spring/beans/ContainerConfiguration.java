@@ -1,4 +1,4 @@
-package com.att.training.ct.spring.beans;
+package com.att.training.ct.database.spring.beans;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
@@ -9,7 +9,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static com.att.training.ct.PostgresTestImages.DEFAULT_IMAGE;
+import static com.att.training.ct.database.PostgresTestImages.DEFAULT_IMAGE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
