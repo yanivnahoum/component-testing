@@ -25,7 +25,7 @@ public class KafkaController {
     @PutMapping("/produce/{number}")
     @ResponseStatus(ACCEPTED)
     public CompletableFuture<String> produce(@Positive @PathVariable int number) {
-        return kafkaTemplate.send(Kafka.MAIN_TOPIC, number, String.valueOf(number))
+        return kafkaTemplate.send(Kafka.MAIN_TOPIC, number, "value-" + number)
                 .thenApply(SendResult::toString);
     }
 }

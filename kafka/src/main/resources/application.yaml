@@ -1,32 +1,14 @@
 server:
   servlet:
-    context-path: /examples
+    context-path: /ct
 
-management:
-  server:
-    port: 8081
-  endpoints:
-    web:
-      exposure:
-        include:
-        - health
-        - env
-  endpoint:
-    health:
-      show-details: always
-      probes:
-        enabled: true
-        add-additional-paths: true
-      group:
-        readiness:
-          include: readinessState, kafka
 spring:
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: spring-examples-kafka
+      group-id: kafka-component-testing
     producer:
       key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
