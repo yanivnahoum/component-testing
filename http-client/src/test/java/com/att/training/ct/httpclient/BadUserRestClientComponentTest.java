@@ -4,6 +4,7 @@ import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import org.junit.jupiter.api.AutoClose;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,12 @@ class BadUserRestClientComponentTest {
     static void setUp() throws IOException {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
+    }
+
+    @BeforeEach
+    void resetMockServer() {
+        // This is a possible fix for the issue demonstrated in this test.
+        // ((QueueDispatcher) mockWebServer.getDispatcher()).clear();
     }
 
     @DynamicPropertySource
