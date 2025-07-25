@@ -15,6 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class ContainerConfiguration {
+
     @SuppressWarnings("resource")
     @ServiceConnection
     @Bean

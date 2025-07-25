@@ -1,8 +1,8 @@
 package com.att.training.ct.httpclient;
 
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterAll;
+import mockwebserver3.MockResponse;
+import mockwebserver3.MockWebServer;
+import org.junit.jupiter.api.AutoClose;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -22,6 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BadUserRestClientComponentTest {
+    @AutoClose
     private static MockWebServer mockWebServer;
     @Autowired
     private UserClient userClient;
@@ -30,11 +31,6 @@ class BadUserRestClientComponentTest {
     static void setUp() throws IOException {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
-    }
-
-    @AfterAll
-    static void tearDown() throws IOException {
-        mockWebServer.shutdown();
     }
 
     @DynamicPropertySource
@@ -46,15 +42,16 @@ class BadUserRestClientComponentTest {
     @Test
     @SuppressWarnings("java:S2699")
     void givenUserMary_leaveResponseQueued() {
-        mockWebServer.enqueue(new MockResponse()
+        mockWebServer.enqueue(new MockResponse.Builder()
                 .setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                .setBody("""
+                .body("""
                         {
                             "id": 2,
                             "firstName": "Mary",
                             "lastName": "Smith"
                         }
                         """)
+                .build()
         );
 
         // We then run some code that throws an exception or fails to dequeue the response
@@ -63,15 +60,16 @@ class BadUserRestClientComponentTest {
     @Order(2)
     @Test
     void givenUserJohn_whenGetUser_thenReturnJohn() {
-        mockWebServer.enqueue(new MockResponse()
-                .setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                .setBody("""
+        mockWebServer.enqueue(new MockResponse.Builder()
+                .addHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                .body("""
                         {
                             "id": 1,
                             "firstName": "John",
                             "lastName": "Doe"
                         }
                         """)
+                .build()
         );
 
         var user = userClient.get(1);
