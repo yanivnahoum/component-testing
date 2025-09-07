@@ -14,13 +14,19 @@ public class UserDao {
     private final JdbcClient jdbcClient;
 
     public int count() {
-        return jdbcClient.sql("SELECT COUNT(1) FROM app.users")
+        return jdbcClient.sql("""
+                        SELECT COUNT(1)
+                        FROM app.users
+                        """)
                 .query(Integer.class)
                 .single();
     }
 
     public List<User> findAll() {
-        return jdbcClient.sql("SELECT id, firstName, lastName FROM app.users")
+        return jdbcClient.sql("""
+                        SELECT id, firstName, lastName
+                        FROM app.users
+                        """)
                 .query(userRowMapper)
                 .list();
     }
@@ -30,9 +36,7 @@ public class UserDao {
                         INSERT INTO app.users (id, firstName, lastName)
                         VALUES (?, ?, ?)
                         """)
-                .param(user.id())
-                .param(user.firstName())
-                .param(user.lastName())
+                .paramSource(user)
                 .update();
     }
 
