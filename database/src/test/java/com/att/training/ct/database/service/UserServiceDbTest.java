@@ -38,9 +38,9 @@ class UserServiceDbTest extends PostgresSingleton {
     @Sql(statements = "DELETE FROM app.users", executionPhase = AFTER_TEST_METHOD)
     void givenMultipleUniqueUsers_whenFindAll_thenReturnAll() {
         // given
-        User john = new User(1, "John", "Doe");
-        User mary = new User(2, "Mary", "Smith");
-        User alice = new User(3, "Alice", "Smith");
+        var john = new User(1, "John", "Doe");
+        var mary = new User(2, "Mary", "Smith");
+        var alice = new User(3, "Alice", "Smith");
         jdbcClient.sql("""
                         INSERT INTO app.users (id, firstName, lastName)
                         VALUES (1, 'John', 'Doe'),
