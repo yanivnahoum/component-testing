@@ -35,7 +35,7 @@ class UserServiceTest {
     }
 
     @Test
-    void givenSingleUsers_whenFindAll_thenReturnIt() {
+    void givenSingleUser_whenFindAll_thenReturnIt() {
         // given
         User john = new User(1, "John", "Doe");
         when(userDao.findAll()).thenReturn(List.of(john));

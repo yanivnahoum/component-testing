@@ -51,6 +51,6 @@ class UserServiceDbTest extends PostgresSingleton {
         // when
         var users = userService.findAll();
         // then
-        assertThat(users).containsExactlyInAnyOrder(john, mary, alice);
+        assertThat(users).containsExactly(alice, mary, john);
     }
 }
