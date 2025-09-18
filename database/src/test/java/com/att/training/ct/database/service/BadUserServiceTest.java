@@ -79,7 +79,7 @@ class BadUserServiceTest {
         // when
         var users = userService.findAll();
         // then
-        assertThat(users).containsExactlyInAnyOrder(john, mary, alice);
+        assertThat(users).containsExactly(alice, mary, john);
     }
 
     @Test
@@ -93,7 +93,7 @@ class BadUserServiceTest {
         // when
         var users = userService.findAll();
         // then
-        assertThat(users).containsExactlyInAnyOrder(john, mary2);
+        assertThat(users).containsExactly(mary2, john);
     }
 
     private static RowMapper<User> anyUserRowMapper() {
