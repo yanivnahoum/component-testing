@@ -13,15 +13,6 @@ public class UserDao {
     private final UserRowMapper userRowMapper = new UserRowMapper();
     private final JdbcClient jdbcClient;
 
-    public int count() {
-        return jdbcClient.sql("""
-                        SELECT COUNT(1)
-                        FROM app.users
-                        """)
-                .query(Integer.class)
-                .single();
-    }
-
     public List<User> findAll() {
         return jdbcClient.sql("""
                         SELECT id, firstName, lastName
@@ -29,6 +20,15 @@ public class UserDao {
                         """)
                 .query(userRowMapper)
                 .list();
+    }
+
+    public int count() {
+        return jdbcClient.sql("""
+                        SELECT COUNT(1)
+                        FROM app.users
+                        """)
+                .query(Integer.class)
+                .single();
     }
 
     public void save(User user) {
