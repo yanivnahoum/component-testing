@@ -23,7 +23,7 @@ class SimplePostgresTest {
         }
     }
 
-    protected HikariDataSource buildDataSource(JdbcDatabaseContainer<?> container) {
+    private HikariDataSource buildDataSource(JdbcDatabaseContainer<?> container) {
         container.start();
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(container.getJdbcUrl());
